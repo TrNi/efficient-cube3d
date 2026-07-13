@@ -1,18 +1,3 @@
----
-base_model: Roblox/cube3d-v0.5
-base_model_relation: quantized
-tags:
-  - 3d-generation
-  - text-to-3d
-  - quantized
-  - int4
-  - torchao
-  - rtn
-license: apache-2.0
-library_name: torchao
-pipeline_tag: text-to-3d
----
-
 # 🚀 First INT4 Quantized Efficient-Cube3D - Run on Half the VRAM
 [![HuggingFace](https://img.shields.io/badge/HuggingFace-efficient--cube3d-FFD21E?logo=huggingface&logoColor=black)](https://huggingface.co/TrNi/efficient-cube3d)         [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://drive.google.com/file/d/1-mWdiDHJIozQnKC-bP9TmaWR0fQLRo2X/view?usp=sharing)     ![](https://img.shields.io/badge/Model_Size-1.26_GB_(82%25↓)-blueviolet)      ![](https://img.shields.io/badge/Peak_VRAM-11.3_GB_(55%25↓)-brightgreen)        ![](https://img.shields.io/badge/Setup_Time-6.9s_(97%25↓)-blue)       ![](https://img.shields.io/badge/Latency-14.2s_(on_par)-yellowgreen)
 

@@ -233,20 +233,29 @@ def _download_weights(device, work_dir: str, hf_repo: str, cube3d_repo: str) -> 
     config_path = hf_hub_download(hf_repo, "open_model_v0.5.yaml")
     quant_config_path = hf_hub_download(hf_repo, "quant_config.json")
 
+    print("  Benchmark prompt suite ...")
+    prompts_path = hf_hub_download(hf_repo, "master_suite.json")
+
     print("[setup_hf] All weights downloaded.  ✓")
 
+    compare_dir = os.path.join(work_dir, "benchmark_results")
+
     return dict(
-        config_path  = config_path,
-        gpt_ckpt     = gpt_ckpt,
-        tok_ckpt     = tok_ckpt,
-        int4_weights = int4_weights,
-        int4_dir     = work_dir,
-        int4_config  = quant_config_path,
-        device       = device,
-        group_size   = 128,
+        config_path   = config_path,
+        gpt_ckpt      = gpt_ckpt,
+        tok_ckpt      = tok_ckpt,
+        int4_weights  = int4_weights,
+        int4_dir      = work_dir,
+        int4_config   = quant_config_path,
+        prompts_path  = prompts_path,
+        compare_dir   = compare_dir,
+        device        = device,
+        group_size    = 128,
     )
 
 
 def _make_dirs(cfg: dict):
     os.makedirs(cfg["int4_dir"], exist_ok=True)
-    print(f"[setup_hf] Output directory: {cfg['int4_dir']}")
+    os.makedirs(cfg["compare_dir"], exist_ok=True)
+    print(f"[setup_hf] Output directory : {cfg['int4_dir']}")
+    print(f"[setup_hf] Benchmark results: {cfg['compare_dir']}")

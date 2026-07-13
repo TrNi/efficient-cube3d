@@ -548,6 +548,7 @@ def benchmark_config(
     # 7.17 GB BF16 checkpoint never touches GPU. Falls back to the inline BF16 path
     # when INT4 weights are absent (first-time quantization scenario).
     int4_shortcut = quantized and os.path.exists(cfg["int4_weights"])
+    graph_already_captured = False
 
     torch.cuda.reset_peak_memory_stats()
     torch.cuda.synchronize()
@@ -557,6 +558,7 @@ def benchmark_config(
         import quant_int4
         if use_fast:
             engine = quant_int4.load_int4_engine(cfg)
+            graph_already_captured = True
         else:
             from cube3d.inference.engine import Engine
             gpt_model = quant_int4._build_int4_gpt_model(cfg)
@@ -605,7 +607,7 @@ def benchmark_config(
 
     # ── Separate CUDA graph capture timing (EngineFast only) ─────────────────
     cuda_graph_time_s = 0.0
-    if use_fast:
+    if use_fast and not graph_already_captured:
         torch.cuda.synchronize()
         t_graph = time.perf_counter()
         engine.graph = torch.cuda.CUDAGraph()

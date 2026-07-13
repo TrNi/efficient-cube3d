@@ -36,6 +36,14 @@ TORCH_INDEX_URL     = "https://download.pytorch.org/whl/cu128"
 _DEFAULT_HF_REPO      = "TrNi/efficient-cube3d" # you may specify custom ones in bootstrap_hf()
 _DEFAULT_CUBE3D_REPO  = "TrNi/cube"
 _DEFAULT_CUBE3D_GIT   = "https://github.com/TrNi/cube.git"
+# Derived relative to this file: setup_hf.py lives in scripts/, cube/ is a sibling of scripts/
+_DEFAULT_CUBE_DIR     = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "cube")
+_DEFAULT_CUBE_DIR     = os.path.normpath(_DEFAULT_CUBE_DIR)
+
+# Insert cube_dir into sys.path at import time so `import cube3d` works in all
+# subsequent cells without requiring bootstrap_hf() to have been called first.
+if _DEFAULT_CUBE_DIR not in sys.path:
+    sys.path.insert(0, _DEFAULT_CUBE_DIR)
 
 def ensure_torch():
     """
